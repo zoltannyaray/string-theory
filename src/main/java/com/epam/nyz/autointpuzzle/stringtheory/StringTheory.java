@@ -1,33 +1,43 @@
 package com.epam.nyz.autointpuzzle.stringtheory;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringTheory {
 
-    public int getMaxNestingLevelInKQuotedString( String input ) {
+    public int getMaxNestingLevelInKQuotedString2(String input) {
         Pattern pattern = Pattern.compile("'+");
         Matcher matcher = pattern.matcher(input);
-        int maxPossible = 0;
-        while ( matcher.find() ) {
-            int possible = matcher.group(0).length();
-            if ( possible > maxPossible ) {
-                maxPossible = possible; 
-            }
+        List<Integer> quoteGroups = new ArrayList<>();
+        while (matcher.find()) {
+            quoteGroups.add(matcher.group(0).length());
         }
-        boolean resultFound = false;
-        int result = 0;
-        for ( int i = maxPossible; i > 0 && !resultFound; i-- ) {
-            String regex = "([^']|^)'{" + i + "}(.*?)'{" + i + "}([^']|$)";
-            pattern = Pattern.compile(regex);
-            matcher = pattern.matcher(input);
-            while ( !resultFound && matcher.find() ) {
-                if ( getMaxNestingLevelInKQuotedString(matcher.group(2)) == (i - 1)) {
-                    resultFound = true;
-                    result = i;
+        Stack<Integer> stack = new Stack<>();
+        boolean isStackEating = true;
+        while (!quoteGroups.isEmpty()) {
+            Integer currentGroup = quoteGroups.get(0);
+            if ( isStackEating ) {
+                int canEatMax = currentGroup;
+                if ( !stack.isEmpty() ) {
+                    canEatMax = Math.max(currentGroup, stack.peek());
                 }
+                for (int i = canEatMax; i >= 1; i--) {
+                    currentGroup -= i;
+                    if (currentGroup == 0) {
+                        quoteGroups.remove(0);
+                    }
+                    stack.push(i);
+                    if ( i == 1 ) {
+                        isStackEating = false;
+                    }
+                }    
             }
+            
         }
+        int result = 0;
         return result;
     }
     
