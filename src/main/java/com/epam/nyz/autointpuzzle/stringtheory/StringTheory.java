@@ -8,36 +8,26 @@ import java.util.regex.Pattern;
 public class StringTheory {
 
     public int getMaxNestingLevelInKQuotedString(String input) {
-        Pattern pattern = Pattern.compile("'+");
-        Matcher matcher = pattern.matcher(input);
-        int maxPossible = 0;
-        while (matcher.find()) {
-            int possible = matcher.group(0).length();
-            if (possible > maxPossible) {
-                maxPossible = possible;
-            }
+        List<String> kQuotedStringRegexes = new ArrayList<>();
+        kQuotedStringRegexes.add("[^']*");
+        int i = 1;
+        while ( i < input.length() && input.matches(".*'{" + i + "}.*")) {
+            kQuotedStringRegexes.add("([^']*'{" + i + "}" + kQuotedStringRegexes.get(i - 1) + "'{" + i + "}[^']*)+");
+            i++;
         }
-        List<String> regexes = new ArrayList<>();
-        regexes.add("[^']*");
-        for (int i = 1; i <= maxPossible; i++) {
-            regexes.add("([^']*'{" + i + "}" + regexes.get(i - 1) + "'{" + i + "}[^']*)+");
-        }
-        int result = 0;
+        int maxNestingLevel = 0;
         boolean isFound = false;
-        int i = regexes.size() - 1;
+        i = kQuotedStringRegexes.size() - 1;
         while (i >= 0 && !isFound) {
-            pattern = Pattern.compile(regexes.get(i));
-            matcher = pattern.matcher(input);
+            Pattern pattern = Pattern.compile(kQuotedStringRegexes.get(i));
+            Matcher matcher = pattern.matcher(input);
             if (matcher.matches()) {
                 isFound = true;
-                result = i;
+                maxNestingLevel = i;
             }
             i--;
         }
-        if (!isFound) {
-            throw new RuntimeException("Wrong quotes");
-        }
-        return result;
+        return maxNestingLevel;
     }
 
 }

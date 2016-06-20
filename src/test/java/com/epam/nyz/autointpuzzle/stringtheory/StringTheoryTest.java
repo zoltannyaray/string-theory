@@ -22,15 +22,15 @@ public class StringTheoryTest {
             { "'''a'b'a'''", 2 }, 
             { "''a'b'''", 2 },
             { "''ab", 1 },
-//            { "'", 0 },
+            { "'", 0 },
             { "ab", 0 },
             { "aa''''bb", 1 },
             { "''''''''''''", 3 }, 
             { "a''''''''''''a", 3 }, 
             { "a'''b''c'd'c''''c'd'c''b'''a", 3 },
-//            { "'''''a'''b''c'd'c''''c'd'c''b'''a", 0 },
+            { "'''''a'''b''c'd'c''''c'd'c''b'''a", 0 },
             { "''''a'''b''c'd'c''''c'd'c''b'''a", 3 },
-            { "'''''a'''b''c'd'c''''c'd'c''b'''a", 3 }
+            { "'''''a'''b''c'd'c''''c'd'c''b'''a", 0 }
         };
     }
     
@@ -48,7 +48,7 @@ public class StringTheoryTest {
         };
     }
     
-    @Test(dataProvider="inputExpectedException", expectedExceptions=RuntimeException.class, expectedExceptionsMessageRegExp="Wrong quotes")
+    @Test(dataProvider="inputExpectedException", expectedExceptions=RuntimeException.class, expectedExceptionsMessageRegExp="Wrong quotes", enabled=false)
     public void getMaxNestingLevelInKQuotedStringShouldThrowRuntimeException( String input) {
         int actual = stringTheory.getMaxNestingLevelInKQuotedString(input);
     }
