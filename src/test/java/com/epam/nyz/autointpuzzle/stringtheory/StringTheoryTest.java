@@ -19,6 +19,7 @@ public class StringTheoryTest {
     public Object[][] inputExpectedOutputMap() {
         return new Object[][] {
             { "'a'b''", 1 },
+            { "''All 'work' and no 'play'''", 2 },
             { "'''a'b'a'''", 2 }, 
             { "''a'b'''", 2 },
             { "''ab", 1 },
@@ -30,7 +31,8 @@ public class StringTheoryTest {
             { "a'''b''c'd'c''''c'd'c''b'''a", 3 },
             { "'''''a'''b''c'd'c''''c'd'c''b'''a", 0 },
             { "''''a'''b''c'd'c''''c'd'c''b'''a", 3 },
-            { "'''''a'''b''c'd'c''''c'd'c''b'''a", 0 }
+            { "'''''a'''b''c'd'c''''c'd'c''b'''a", 0 },
+            { "''''''''''''''''''''''", 4 },
         };
     }
     
