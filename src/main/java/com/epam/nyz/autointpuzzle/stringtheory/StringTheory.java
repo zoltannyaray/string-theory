@@ -25,7 +25,7 @@ public class StringTheory {
         int result = 0;
         boolean isFound = false;
         int i = regexes.size() - 1;
-        while (i >= 1 && !isFound) {
+        while (i >= 0 && !isFound) {
             pattern = Pattern.compile(regexes.get(i));
             matcher = pattern.matcher(input);
             if (matcher.matches()) {
@@ -33,6 +33,9 @@ public class StringTheory {
                 result = i;
             }
             i--;
+        }
+        if (!isFound) {
+            throw new RuntimeException("Wrong quotes");
         }
         return result;
     }
