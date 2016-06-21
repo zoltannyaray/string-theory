@@ -23,16 +23,15 @@ public class StringTheoryTest {
             { "'''a'b'a'''", 2 }, 
             { "''a'b'''", 2 },
             { "''ab", 1 },
-            { "'", 0 },
             { "ab", 0 },
             { "aa''''bb", 1 },
             { "''''''''''''", 3 }, 
             { "a''''''''''''a", 3 }, 
             { "a'''b''c'd'c''''c'd'c''b'''a", 3 },
-            { "'''''a'''b''c'd'c''''c'd'c''b'''a", 0 },
             { "''''a'''b''c'd'c''''c'd'c''b'''a", 3 },
-            { "'''''a'''b''c'd'c''''c'd'c''b'''a", 0 },
             { "''''''''''''''''''''''", 4 },
+            { "", 0 },
+            { "'a' ''a'b'a'' '''a''b'c'b''a''' ''''a'''b''c'd'c''b'''a'''' ''''a'''b''c'd'c''b'''a'''' 'a' ''a'b'a''", 4 }
         };
     }
     
@@ -46,11 +45,12 @@ public class StringTheoryTest {
     public Object[][] inputExpectedException() {
         return new Object[][] {
             { "'" },
-            
+            { "'''''a'''b''c'd'c''''c'd'c''b'''a"},
+            { "''a' ''a'b'a'' '''a''b'c'b''a''' ''''a'''b''c'd'c''b'''a'''' 'a' ''a'b'a''" }
         };
     }
     
-    @Test(dataProvider="inputExpectedException", expectedExceptions=RuntimeException.class, expectedExceptionsMessageRegExp="Wrong quotes", enabled=false)
+    @Test(dataProvider="inputExpectedException", expectedExceptions=RuntimeException.class, expectedExceptionsMessageRegExp="Illegal K-quoted string!")
     public void getMaxNestingLevelInKQuotedStringShouldThrowRuntimeException( String input) {
         int actual = stringTheory.getMaxNestingLevelInKQuotedString(input);
     }
