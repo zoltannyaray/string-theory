@@ -1,7 +1,6 @@
 package com.epam.nyz.autointpuzzle.stringtheory;
 
 import static org.testng.Assert.*;
-
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -31,6 +30,7 @@ public class StringTheoryTest {
             { "''''a'''b''c'd'c''''c'd'c''b'''a", 3 },
             { "''''''''''''''''''''''", 4 },
             { "", 0 },
+            { "'a' ''a'b'a'' '''a''b'c'b''a''' '''' '''''''''''' a'''b''c'd'c''b'''a'''' ''''a'''b''c'd'c''b'''a'''' 'a' ''a'b'a''", 4 },
             { "'a' ''a'b'a'' '''a''b'c'b''a''' ''''a'''b''c'd'c''b'''a'''' ''''a'''b''c'd'c''b'''a'''' 'a' ''a'b'a''", 4 }
         };
     }

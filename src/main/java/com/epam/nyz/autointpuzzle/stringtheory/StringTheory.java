@@ -17,9 +17,9 @@ public class StringTheory {
         }
         kQuotedStringRegexes.set(0, "^[^']*$");
         int maxNestingLevel = 0;
-        boolean isMaxNestedKQuoteStringFound = false;
+        boolean isMaxNestedKQuotedStringFound = false;
         k = kQuotedStringRegexes.size() - 1;
-        while (k >= 0 && !isMaxNestedKQuoteStringFound) {
+        while (k >= 0 && !isMaxNestedKQuotedStringFound) {
             Pattern pattern = Pattern.compile("(?<left>.*?)(" + kQuotedStringRegexes.get(k) + ")(?<right>.*)");
             Matcher matcher = pattern.matcher(input);
             if (matcher.matches()) {
@@ -30,14 +30,14 @@ public class StringTheory {
                     if (matcher.group("right").length() > 0) {
                         getMaxNestingLevelInKQuotedString(matcher.group("right"));
                     }
-                    isMaxNestedKQuoteStringFound = true;
+                    isMaxNestedKQuotedStringFound = true;
                     maxNestingLevel = k;
                 } catch (RuntimeException e) {
                 }
             }
             k--;
         }
-        if (!isMaxNestedKQuoteStringFound) {
+        if (!isMaxNestedKQuotedStringFound) {
             throw new RuntimeException("Illegal K-quoted string!");
         }
         return maxNestingLevel;
